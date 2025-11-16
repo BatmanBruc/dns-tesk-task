@@ -1,0 +1,68 @@
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: woff2 woff) {
+  $src: null;
+  $formats: (
+    woff2: 'woff2',
+    woff: 'woff',
+    ttf: 'truetype',
+  );
+
+  @each $ext in $exts {
+    $format: map-get($formats, $ext);
+    $src: append($src, url('#{$path}.#{$ext}') format('#{$format}'), comma);
+  }
+
+  @font-face {
+    font-family: $name;
+    font-style: $style;
+    font-weight: $weight;
+    src: $src;
+    font-display: swap;
+  }
+}
+
+@include font-face(
+  'PT_sans',
+  '~/assets/fonts/PT_sans/PTSans-Regular',
+  400,
+  null,
+  ttf
+);
+@include font-face(
+  'PT_sans',
+  '~/assets/fonts/PT_sans/PTSans-Bold',
+  700,
+  null,
+  ttf
+);
+@include font-face(
+  'PT_sans',
+  '~/assets/fonts/PT_sans/PTSans-Bold',
+  700,
+  null,
+  ttf
+);
+@include font-face(
+  'PT_sans',
+  '~/assets/fonts/PT_sans/PTSans-Italic',
+  400,
+  Italic,
+  ttf
+);
+
+@mixin font-t($weight: 400) {
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: $weight;
+}
+
+@mixin font-s($weight: 400) {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: $weight;
+}
+
+@mixin font-l($weight: 400) {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: $weight;
+}
