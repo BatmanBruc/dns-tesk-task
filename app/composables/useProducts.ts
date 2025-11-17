@@ -5,6 +5,7 @@ export const useProducts = () => {
   const error = ref<string | null>(null);
   const route = useRoute();
   const applicationId = route.query.id as string;
+  const loading = ref<boolean>(false);
 
   const loadProducts = async () => {
     if (process.client) {
@@ -19,15 +20,15 @@ export const useProducts = () => {
     error.value = null;
 
     try {
-      const { data } = await useAsyncData('products', () =>
-        $fetch('/api/products'),
-      );
-
-      products.value = data.value!;
-      console.log(products.value);
+      loading.value = true;
+      const data = await $fetch('/api/products');
+      //@ts-ignore
+      products.value = data;
       process.client && saveProducts();
+      loading.value = false;
     } catch (err) {
       error.value = 'Ошибка загрузки товаров';
+      loading.value = false;
       console.error(err);
     }
   };
@@ -61,6 +62,7 @@ export const useProducts = () => {
   return {
     products,
     error,
+    loading,
     loadProducts,
     updateProductField,
     saveProductsComplite,

@@ -2,7 +2,7 @@
   <div class="products-control">
     <BaseButton text="Сохранить" type="primary" :width="140" @click="save()" />
   </div>
-  <BaseTable :columns="columns" :data="products">
+  <BaseTable :columns="columns" :data="products" :loading="loading">
     <template #cell-quantity="{ value, index, key }">
       <BaseInput
         :modelValue="value"
@@ -40,6 +40,7 @@ import type { Product } from '../types/application';
 
 interface Props {
   products: Product[];
+  loading: boolean;
 }
 
 interface Emits {

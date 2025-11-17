@@ -1,8 +1,8 @@
 <template>
   <BasePageBlock title="Товары">
     <ProductsTable
-      v-if="products.length"
       :products="products"
+      :loading="loading"
       @update:product="updateProductField"
       @save="save"
     />
@@ -17,11 +17,17 @@ definePageMeta({
   layout: 'without-nav',
 });
 
-const { products, loadProducts, updateProductField, saveProductsComplite } =
-  useProducts();
+const {
+  products,
+  loading,
+  loadProducts,
+  updateProductField,
+  saveProductsComplite,
+} = useProducts();
 
-await loadProducts();
-
+onMounted(() => {
+  loadProducts();
+});
 const save = () => {
   saveProductsComplite();
   router.push('/');
